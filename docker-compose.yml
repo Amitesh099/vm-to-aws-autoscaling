@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  redis:
+    image: redis
+
+  api:
+    build: .
+    command: node api/server.js
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    command: node worker/worker.js
+    depends_on:
+      - redis
